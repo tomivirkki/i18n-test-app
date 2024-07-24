@@ -1,11 +1,22 @@
-import { createMenuItems, useViewConfig } from '@vaadin/hilla-file-router/runtime.js';
-import { effect, signal } from '@vaadin/hilla-react-signals';
-import { AppLayout, DrawerToggle, Icon, SideNav, SideNavItem } from '@vaadin/react-components';
-import { Suspense, useEffect } from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+import {
+  createMenuItems,
+  useViewConfig,
+} from "@vaadin/hilla-file-router/runtime.js";
+import { effect, signal } from "@vaadin/hilla-react-signals";
+import {
+  AppLayout,
+  DrawerToggle,
+  Icon,
+  SideNav,
+  SideNavItem,
+} from "@vaadin/react-components";
+import { Suspense, useEffect } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { i18n } from "@vaadin/hilla-react-i18n";
+await i18n.configure();
 
 const defaultTitle = document.title;
-const documentTitleSignal = signal('');
+const documentTitleSignal = signal("");
 effect(() => (document.title = documentTitleSignal.value));
 
 // Publish for Vaadin to use
@@ -25,7 +36,10 @@ export default function MainLayout() {
       <div slot="drawer" className="flex flex-col justify-between h-full p-m">
         <header className="flex flex-col gap-m">
           <span className="font-semibold text-l">My App</span>
-          <SideNav onNavigate={({ path }) => navigate(path!)} location={location}>
+          <SideNav
+            onNavigate={({ path }) => navigate(path!)}
+            location={location}
+          >
             {createMenuItems().map(({ to, title, icon }) => (
               <SideNavItem path={to} key={to}>
                 {icon ? <Icon src={icon} slot="prefix"></Icon> : <></>}
